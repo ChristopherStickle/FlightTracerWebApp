@@ -4,8 +4,6 @@ import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import {fromLonLat} from 'ol/proj';
-import 'ol/ol.css';
-
 class MapContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -23,8 +21,7 @@ class MapContainer extends React.Component {
             ],
             view: new View({
                 center: fromLonLat([-76.510498,43.455345]),
-                //center: fromLonLat([0,0]),
-                zoom: 15
+                zoom: 13
 
             })
         });

@@ -7,8 +7,8 @@ export default function Navbar() {
                 AirTracer
             </Link>
             <ul>
+                <CustomLink to="/findflights">Find Flights</CustomLink>
                 <CustomLink to="/about">About</CustomLink>
-                <CustomLink to="/map">Map</CustomLink>
             </ul>
         </nav>
     )
