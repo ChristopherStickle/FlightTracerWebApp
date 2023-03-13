@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home.js';
 import About from './pages/about.js';
-import Map from './pages/map.js';
+import Findflights from './pages/findflights.js';
 function App() {
     return (
         <>
@@ -12,7 +12,7 @@ function App() {
             <div className="container">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/map" element={<Map/>} />
+                    <Route path="/findflights" element={<Findflights/>} />
                     <Route path="/about" element={<About />} />
                 </Routes>
             </div>
