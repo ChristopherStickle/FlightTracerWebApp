@@ -54,3 +54,23 @@ body {
 .nav li:hover {
   background-color: #777;
 }
+
+.search--menu {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height:64px;
+  margin:16px;
+}
+
+.search--menu form{
+  display:flex;
+  gap: 10px;
+}
+
+
+#search--title {
+  font-size: 20px;
+}
