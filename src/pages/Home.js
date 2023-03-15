@@ -2,16 +2,15 @@ import React from 'react';
 
 const Home = () => {
     return (
-        <div
+        <body
             style={{
                 display: 'flex',
-                justifyContent: 'Center',
-                alignItems: 'Right',
-                height: '100vh'
+                justifyContent: 'center',
+                height: '90vh',
             }}
         >
             <h1>Welcome to AirTracer</h1>
-        </div>
+        </body>
     );
 };
 

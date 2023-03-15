@@ -1,12 +1,14 @@
 import React from 'react';
 import MapContainer from "../components/MapContainer";
+import SearchMenu from "../components/searchMenu";
 
 
 const Findflights = () => {
     return (
-        <div>
+        <body>
+            <SearchMenu />
             <MapContainer />
-        </div>
+        </body>
     );
 };
 export default Findflights;
