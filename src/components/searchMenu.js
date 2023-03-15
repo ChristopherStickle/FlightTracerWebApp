@@ -17,6 +17,14 @@ return (
             <div id="search--title">Search Menu</div>
             <form>
                 <input type="text" id="fairfield" placeholder='Airfield Name'/>
+                <div>
+                    <input type="radio" id="destination-choice1" name="destination" value="Departures" />
+                    <label for="destination-choice1">Departures</label>
+                    <input type="radio" id="destination-choice2" name="destination" value="Arrivals" />
+                    <label for="destination-choice2">Arrivals</label>
+                    <input type="radio" id="destination-choice3" name="destination" value="Both" />
+                    <label for="destination-choice3">Both</label>
+                </div>
                 <input type="date" id="fdate"/>
                 <label for="flight-times" ></label>
                 <select name="flight-times" id="fight-times">

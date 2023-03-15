@@ -67,8 +67,10 @@ body {
 
 .search--menu form{
   display:flex;
+  margin: 6px;
   gap: 10px;
 }
+
 
 
 #search--title {
