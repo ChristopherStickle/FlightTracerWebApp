@@ -1,11 +1,12 @@
 import React from 'react';
+import "./pages.css"
 
 const About = () => {
     return (
         <body>
-            <h1>What is the Project?</h1>
+            <h3>What is the Project?</h3>
             <p>BT told us in order to pass we need to build some project....this is one part of said project.</p>
-            <h1>Who made it?</h1>
+            <h3>Who made it?</h3>
             <p>
                 <li>Keith Allen</li>
                 <li>David Hennigan</li>
@@ -13,7 +14,7 @@ const About = () => {
                 <li>Adil Tiba</li>
                 <li>Emir Akpinar</li>
             </p>
-            <h1>Licensing Agreements/Products Used</h1>
+            <h3>Licensing Agreements/Products Used</h3>
             <p>Needed?</p>
         </body>
     );
