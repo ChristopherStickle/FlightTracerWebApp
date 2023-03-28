@@ -11,11 +11,8 @@ import React from 'react';
     * The clear button will clear the search criteria.
     */
 
+/*
 export default function SearchMenu() {
-
-
-
-
 return (
         <div className="search--menu">
             <div id="search--title">Search Menu</div>
@@ -63,4 +60,91 @@ return (
             </form>
         </div>
     );
+}*/
+class SearchMenu extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            airfield: '',
+            destination: '',
+            date: '',
+            time: ''
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChanges = this.handleChanges.bind(this);
+    }
+    handleClear = () => {
+        this.setState({
+            airfield: '',
+            destination: '',
+            date: '',
+            time: ''
+        });
+    }
+    handleSubmit = (event) => {
+        alert('Submitted: \n' +
+            'Airfield: ' + this.state.airfield + '\n' +
+            'Destination: ' + this.state.destination + '\n' +
+            'Date: ' + this.state.date + '\n' +
+            'Time: ' + this.state.time + '\n'
+        );
+        event.preventDefault();
+    }
+    handleChanges = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+
+    render() {
+        return (
+            <div className="search--menu">
+                <div id="search--title">Search Menu</div>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="text" id="fairfield" placeholder='Airfield Name' name="airfield" value={this.state.airfield} onChange={this.handleChanges} />
+                    <div>
+                        <input type="radio" id="destination-choice1" name="destination" value="Departures" onChange={this.handleChanges} />
+                        <label for="destination-choice1">Departures</label>
+                        <input type="radio" id="destination-choice2" name="destination" value="Arrivals" onChange={this.handleChanges} />
+                        <label for="destination-choice2">Arrivals</label>
+                        <input type="radio" id="destination-choice3" name="destination" value="Both" onChange={this.handleChanges} />
+                        <label for="destination-choice3">Both</label>
+                    </div>
+                    <input type="date" id="fdate" name="date" value={this.state.date} onChange={this.handleChanges} />
+                    <label for="flight-times" ></label>
+                    <select name="time" id="fight-times" value={this.state.time} onChange={this.handleChanges}>
+                        <option value="none">Select a time</option>
+                        <option value="00:00:00">00:00:00</option>
+                        <option value="01:00:00">01:00:00</option>
+                        <option value="02:00:00">02:00:00</option>
+                        <option value="03:00:00">03:00:00</option>
+                        <option value="04:00:00">04:00:00</option>
+                        <option value="05:00:00">05:00:00</option>
+                        <option value="06:00:00">06:00:00</option>
+                        <option value="07:00:00">07:00:00</option>
+                        <option value="08:00:00">08:00:00</option>
+                        <option value="09:00:00">09:00:00</option>
+                        <option value="10:00:00">10:00:00</option>
+                        <option value="11:00:00">11:00:00</option>
+                        <option value="12:00:00">12:00:00</option>
+                        <option value="13:00:00">13:00:00</option>
+                        <option value="14:00:00">14:00:00</option>
+                        <option value="15:00:00">15:00:00</option>
+                        <option value="16:00:00">16:00:00</option>
+                        <option value="17:00:00">17:00:00</option>
+                        <option value="18:00:00">18:00:00</option>
+                        <option value="19:00:00">19:00:00</option>
+                        <option value="20:00:00">20:00:00</option>
+                        <option value="21:00:00">21:00:00</option>
+                        <option value="22:00:00">22:00:00</option>
+                        <option value="23:00:00">23:00:00</option>
+                    </select>
+                    <input type="submit" id="searchmenu-submit"></input>
+                    <button type="reset" onClick={this.handleClear}>Clear</button>
+                </form>
+            </div>
+        );
+    }
 }
+export default SearchMenu;
