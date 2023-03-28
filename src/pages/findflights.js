@@ -34,6 +34,24 @@ class Findflights extends React.Component{
             arrival: "KJFK",
             departureTime: "12:00",
             arrivalTime: "14:00"
+        },
+        {
+            callsign: "AAL123",
+            aircraft: "A320",
+            icao24: "A12345",
+            departure: "KATL",
+            arrival: "KJFK",
+            departureTime: "12:00",
+            arrivalTime: "14:00"
+        },
+        {
+            callsign: "AAL123",
+            aircraft: "A320",
+            icao24: "A12345",
+            departure: "KATL",
+            arrival: "KJFK",
+            departureTime: "12:00",
+            arrivalTime: "14:00"
         }
     ];
 
@@ -71,7 +89,6 @@ class Findflights extends React.Component{
                             </tr>
                         ))}
                     </table>
-
                 }
             />}
             </body>
