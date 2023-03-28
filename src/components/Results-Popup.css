@@ -1,0 +1,34 @@
+.ResultsPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.box{
+    position: relative;
+    width: 50%;
+    min-height: 50%;
+    background-color: #fff;
+    border: 1px solid #999;
+    border-radius: 10px;
+    margin: 20px auto;
+    padding: 20px;
+    overflow: auto;
+}
+.btn-close{
+    cursor: pointer;
+    border: 1px solid #999;
+    border-radius: 50%;
+    position: fixed;
+    right: calc(25% - 8px);
+    top: 15px;
+}
+.btn-load{
+    cursor: pointer;
+    border: 1px solid #999;
+    position: fixed;
+    right: calc(25% + 5px);
+    bottom: calc(50% - 15px);
+}

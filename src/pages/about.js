@@ -5,7 +5,7 @@ const About = () => {
     return (
         <body>
             <h3>What is the Project?</h3>
-            <p>BT told us in order to pass we need to build some project....this is one part of said project.</p>
+            <p>CSC 380 project at Suny Oswego.</p>
             <h3>Who made it?</h3>
             <p>
                 <li>Keith Allen</li>

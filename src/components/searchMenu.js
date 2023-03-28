@@ -12,6 +12,10 @@ import React from 'react';
     */
 
 export default function SearchMenu() {
+
+
+
+
 return (
         <div className="search--menu">
             <div id="search--title">Search Menu</div>
