@@ -3,7 +3,7 @@ import MapContainer from "../components/MapContainer";
 import SearchMenu from "../components/SearchMenu";
 import ResultsPopup from "../components/Results-Popup";
 import "./table.css"
-import airportData from "./airports.json";
+import airportData from "./airportsReduced.json";
 
 class Findflights extends React.Component{
     constructor(props){
