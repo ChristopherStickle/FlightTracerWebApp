@@ -1,14 +1,15 @@
 import React from 'react';
 import MapContainer from "../components/MapContainer";
-import SearchMenu from "../components/searchMenu";
+import SearchMenu from "../components/SearchMenu";
 import ResultsPopup from "../components/Results-Popup";
 import "./table.css"
+import airportData from "./airports.json";
 
 class Findflights extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            showPopup: true
+            showPopup: false
         }
     }
 
@@ -58,9 +59,9 @@ class Findflights extends React.Component{
     render(){
         return(
             <body>
-            <SearchMenu
-                onSubmit={this.togglePopup}
-            />
+            <center id="search--title">Search Menu</center>
+            {/* Build onSubmit in findFlights - Create states and pass props down in SearchMenu*/}
+            <SearchMenu placeholder={"Enter an Airfield..."} data = {airportData}/> {/*onSubmit = togglepoppup*/}
             <MapContainer />
             { this.state.showPopup && <ResultsPopup
                 handleClose={this.togglePopup}
