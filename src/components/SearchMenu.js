@@ -14,6 +14,48 @@ import "./searchMenu.css";
 
 function SearchMenu({placeholder, data}){
 
+    const [filteredTopAirports, setFilteredTopAirports] = useState();
+    const [filteredBottomAirports, setFilteredBottomAirports] = useState();
+    const handleFilterTop = (event) => {
+        const searchWord = event.target.value;
+        const newFilter = data.filter((value) => {
+            return value.name.toLowerCase().includes(searchWord.toLowerCase()) ||
+                value.ident.toLowerCase().includes(searchWord.toLowerCase());
+        });
+        if (searchWord === "") {
+            setFilteredTopAirports([]);
+        } else {
+            setFilteredTopAirports(newFilter);
+        }
+    }
+    const handleFilterBottom = (event) => {
+        const searchWord = event.target.value;
+        const newFilter = data.filter((value) => {
+            return value.name.toLowerCase().includes(searchWord.toLowerCase()) ||
+                value.ident.toLowerCase().includes(searchWord.toLowerCase());
+        });
+        if (searchWord === "") {
+            setFilteredBottomAirports([]);
+        } else {
+            setFilteredBottomAirports(newFilter);
+        }
+    }
+    // click on the airport name to select it
+    const handleSelectTop = (value) => {
+        setFilteredTopAirports([]);
+        setState({
+            ...state,
+            ftopFairfield: value.name
+        })
+    }
+    const handleSelectBottom = (value) => {
+        setFilteredBottomAirports([]);
+        setState({
+            ...state,
+            fbottomFairfield: value.name
+        })
+    }
+
     const [state, setState] = useState({
         ftopFairfield: '',
         ftopDeparture: "",
@@ -25,7 +67,6 @@ function SearchMenu({placeholder, data}){
         fbottomDeparture: "",
         fbottomArrival: ""
     });
-
     const handleClear = () => {
         setState({
             ftopFairfield: '',
@@ -39,21 +80,6 @@ function SearchMenu({placeholder, data}){
             fbottomArrival: ""
         });
     };
-
-    /*const[flights, setFlights]=useState([])
-    const handleClick=(e)=>{
-        e.preventDefault()
-        const query={type1,airfieldName1,date1,time1,type2,airfieldName2,date2,time2}
-        fetch("http://localhost:51261/submitAirplaneTracer", {
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(query)
-        }).then(res=>res.json())
-            .then(result)=>{
-            setFlights(result)
-            // We can draw on the map here
-        }
-    }*/
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -125,7 +151,6 @@ function SearchMenu({placeholder, data}){
         }
     };
 
-
     return(
         <div className="search--menu">
             <form style={{ display:"flex", flexDirection: "column" }}>
@@ -135,8 +160,24 @@ function SearchMenu({placeholder, data}){
                         id="ftopFairfield"
                         placeholder={placeholder}
                         onChange={handleChange}
+                        onKeyUp={handleFilterTop}
                         value={state.ftopFairfield}
                     />
+                    {filteredTopAirports && ( // if filteredAirports is not null
+                        <div className="dataResultTop">
+                            {filteredTopAirports.slice(0, 5).map((value, key) => {
+                                return (
+                                    <div
+                                        className="dataItem"
+                                        onClick={() => handleSelectTop(value)}
+                                        key={key}
+                                    >
+                                        {value.name}
+                                    </div>
+                                );
+                            })}
+                        </div>)
+                    }
                     <div>
                         <input
                             type="radio"
@@ -181,8 +222,24 @@ function SearchMenu({placeholder, data}){
                         id="fbottomFairfield"
                         placeholder={placeholder}
                         onChange={handleChange}
+                        onKeyUp={handleFilterBottom}
                         value={state.fbottomFairfield}
                     />
+                    {filteredBottomAirports && ( // if filteredAirports is not null
+                        <div className="dataResultBottom">
+                            {filteredBottomAirports.slice(0, 5).map((value, key) => {
+                                return (
+                                    <div
+                                        className="dataItem"
+                                        onClick={() => handleSelectBottom(value)}
+                                        key={key}
+                                    >
+                                        {value.name}
+                                    </div>
+                                );
+                            })}
+                        </div>)
+                    }
                     <div>
                         <input
                             type="radio"
