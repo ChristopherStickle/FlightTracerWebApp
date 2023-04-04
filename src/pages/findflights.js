@@ -1,70 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MapContainer from "../components/MapContainer";
 import SearchMenu from "../components/SearchMenu";
 import ResultsPopup from "../components/Results-Popup";
 import "./table.css"
 import airportData from "./airportsReduced.json";
 
-class Findflights extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            showPopup: false
-        }
+function Findflights (){
+
+    //-----------------------------------------------------------------------------------------------------------------
+    // for the search menu |
+    //----------------------
+    const [formData, setFormData] = useState({});
+    const handleFormSubmit = (formStates) => {
+        // set the form data to the formStates
+        setFormData(formStates);
+        alert("Form Submitted" + JSON.stringify(formStates, null, 2));
+        togglePopup();
     }
+    //-----------------------------------------------------------------------------------------------------------------
+    // for the popup |
+    //----------------
+    const [showPopup, setShowPopup] = React.useState(false);
+    const togglePopup = () => {
+        setShowPopup(!showPopup);
+    }
+    //-----------------------------------------------------------------------------------------------------------------
+    const resultTable = [];
 
-    togglePopup = () => {
-        this.setState({showPopup: !(this.state.showPopup)})
-        ;}
-
-    resultTable = [
-        {
-            callsign: "AAL123",
-            aircraft: "A320",
-            icao24: "A12345",
-            departure: "KATL",
-            arrival: "KJFK",
-            departureTime: "12:00",
-            arrivalTime: "14:00"
-        },
-        {
-            callsign: "AAL123",
-            aircraft: "A320",
-            icao24: "A12345",
-            departure: "KATL",
-            arrival: "KJFK",
-            departureTime: "12:00",
-            arrivalTime: "14:00"
-        },
-        {
-            callsign: "AAL123",
-            aircraft: "A320",
-            icao24: "A12345",
-            departure: "KATL",
-            arrival: "KJFK",
-            departureTime: "12:00",
-            arrivalTime: "14:00"
-        },
-        {
-            callsign: "AAL123",
-            aircraft: "A320",
-            icao24: "A12345",
-            departure: "KATL",
-            arrival: "KJFK",
-            departureTime: "12:00",
-            arrivalTime: "14:00"
-        }
-    ];
-
-    render(){
-        return(
-            <body>
+    return(
+        <body>
             <center id="search--title">Search Menu</center>
             {/* Build onSubmit in findFlights - Create states and pass props down in SearchMenu*/}
-            <SearchMenu placeholder={"Enter an Airfield..."} data = {airportData}/> {/*onSubmit = togglepoppup*/}
+            <SearchMenu placeholder={"Enter an Airfield..."} data = {airportData} onFormSubmit={handleFormSubmit} />
             <MapContainer />
-            { this.state.showPopup && <ResultsPopup
-                handleClose={this.togglePopup}
+            { showPopup && <ResultsPopup
+                handleClose={togglePopup}
                 content={
                     <table>
                         <tr>
@@ -77,7 +47,7 @@ class Findflights extends React.Component{
                             <th>Departure Time</th>
                             <th>Arrival Time</th>
                         </tr>
-                        {this.resultTable.map((flight) => (
+                        {resultTable.map((flight, index) => (
                             <tr>
                                 <td><input type="checkbox" name="selected" value="selected"/></td>
                                 <td>{flight.callsign}</td>
@@ -92,9 +62,7 @@ class Findflights extends React.Component{
                     </table>
                 }
             />}
-            </body>
-        );
-    }
-
+        </body>
+    );
 }
 export default Findflights;

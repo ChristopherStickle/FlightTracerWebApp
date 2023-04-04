@@ -12,8 +12,11 @@ import "./searchMenu.css";
     * The clear button will clear the search criteria.
     */
 
-function SearchMenu({placeholder, data}){
+function SearchMenu({placeholder, data, onFormSubmit }) {
 
+    //-----------------------------------------------------------------------------------------------------------------
+    // filter search menus with clickable item lists |
+    //------------------------------------------------
     const [filteredTopAirports, setFilteredTopAirports] = useState();
     const [filteredBottomAirports, setFilteredBottomAirports] = useState();
     const handleFilterTop = (event) => {
@@ -55,7 +58,9 @@ function SearchMenu({placeholder, data}){
             fbottomFairfield: value.name
         })
     }
-
+    //-----------------------------------------------------------------------------------------------------------------
+    // Form states, clear, submit, change handlers |
+    //----------------------------------------------
     const [state, setState] = useState({
         ftopFairfield: '',
         ftopDeparture: "",
@@ -67,6 +72,7 @@ function SearchMenu({placeholder, data}){
         fbottomDeparture: "",
         fbottomArrival: ""
     });
+
     const handleClear = () => {
         setState({
             ftopFairfield: '',
@@ -83,12 +89,11 @@ function SearchMenu({placeholder, data}){
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        alert(JSON.stringify(state, null, 2));
+        onFormSubmit(state);
     };
 
     const handleChange = (event) => {
         const { id, name, value } = event.target;
-
         switch (name) {
             case "ftopDeparture":
                 setState({
@@ -150,6 +155,7 @@ function SearchMenu({placeholder, data}){
                 setState({ ...state, [id]: value });
         }
     };
+    //-----------------------------------------------------------------------------------------------------------------
 
     return(
         <div className="search--menu">
