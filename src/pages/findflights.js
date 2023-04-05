@@ -11,10 +11,21 @@ function Findflights (){
     // for the search menu |
     //----------------------
     const [formData, setFormData] = useState({});
+    const [resultTable, setResultTable] = useState([]);
+
     const handleFormSubmit = (formStates) => {
         // set the form data to the formStates
         setFormData(formStates);
-        alert("Form Submitted" + JSON.stringify(formStates, null, 2));
+        alert("Form Submitted" + JSON.stringify(formData, null, 2));
+        const query = formData;
+        fetch("http://localhost:51261/submitAirplaneTracer", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(query)
+        }).then(res=>res.json()).then((result)=>{
+            alert(JSON.stringify(result))
+        });
+        setResultTable(resultTable => [...resultTable, formData])
         togglePopup();
     }
     //-----------------------------------------------------------------------------------------------------------------
@@ -25,7 +36,6 @@ function Findflights (){
         setShowPopup(!showPopup);
     }
     //-----------------------------------------------------------------------------------------------------------------
-    const resultTable = [];
 
     return(
         <body>
