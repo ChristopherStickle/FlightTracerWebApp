@@ -10,6 +10,7 @@
     position: relative;
     width: 50%;
     min-height: 50%;
+    max-height: 800px;
     background-color: #fff;
     border: 1px solid #999;
     border-radius: 10px;
@@ -28,7 +29,5 @@
 .btn-load{
     cursor: pointer;
     border: 1px solid #999;
-    position: fixed;
-    right: calc(25% + 5px);
-    bottom: calc(50% - 15px);
+    position: absolute;
 }

@@ -1,11 +1,13 @@
-table{
+#resultTable{
     width: 100%;
+    max-height: 500px;
     border-collapse: collapse;
     border-spacing: 0;
     border: 1px solid #ddd;
     font-size: 14px;
     color: #333;
     text-align: center;
+    overflow-y: auto;
 }
 td {
     padding: 10px;
@@ -20,3 +22,4 @@ tr:nth-child(odd) {
 tr:hover {
     background-color: #ddd;
 }
+
