@@ -53,11 +53,11 @@ function Findflights (){
         // make an alert to show the selected flights and their values
         alert("Selected flights: "+ selectedFlights);
         // query the database for the selected flights
-        const query = selectedFlights;
-        fetch("http://localhost:51261/submitAirplaneTracer", {
+        const flightIds = selectedFlights;
+        fetch("http://localhost:51261/resultsAirplaneTracer", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(query)
+            body:JSON.stringify(flightIds)
         }).then(res=>res.json()).then((result)=>{
             alert("Query response: "+JSON.stringify(result, null, 2));
             // send the selected flights to the map for display
