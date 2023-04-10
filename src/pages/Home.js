@@ -2,7 +2,7 @@ import React from 'react';
 
 const Home = () => {
     return (
-        <body
+        <main
             style={{
                 display: 'flex',
                 justifyContent: 'center',
@@ -10,7 +10,7 @@ const Home = () => {
             }}
         >
             <h1>Welcome to AirTracer</h1>
-        </body>
+        </main>
     );
 };
 

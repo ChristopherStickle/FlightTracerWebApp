@@ -3,7 +3,7 @@ import "./pages.css"
 
 const About = () => {
     return (
-        <body>
+        <main>
             <h3>Background</h3>
             <p>
                 At any given moment, there are hundreds, if not thousands of airplanes in the sky above us. These airplanes communicate with one another and with ground-based air traffic control centers using a technology called Automatic dependent surveillance—broadcast (ADS–B). ADS-B is a public signal that can be intercepted by hobbyists and enthusiasts and allow the systematic tracking of air traffic.
@@ -24,7 +24,7 @@ const About = () => {
             </p>
             <h3>Licensing Agreements/Products Used</h3>
             <p>Coming soon...</p>
-        </body>
+        </main>
     );
 };
 

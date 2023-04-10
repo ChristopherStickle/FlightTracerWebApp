@@ -3,7 +3,7 @@ import MapContainer from "../components/MapContainer";
 import SearchMenu from "../components/SearchMenu";
 import ResultsPopup from "../components/Results-Popup";
 import "./table.css"
-import airportData from "./airportsReduced.json";
+import airportData from "./airports.json";
 
 function Findflights (){
     //-----------------------------------------------------------------------------------------------------------------
@@ -14,14 +14,14 @@ function Findflights (){
         clearResultsTable();
         // set the form data to the formStates
         setFormData(formStates);
-        alert("Form Submitted" + JSON.stringify(formStates, null, 2));
+        //alert("Form Submitted" + JSON.stringify(formStates, null, 2));
         const query = formStates;
         fetch("http://localhost:51261/submitAirplaneTracer", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(query)
         }).then(res=>res.json()).then((result)=>{
-            alert("Query response: "+JSON.stringify(result, null, 2));
+            //alert("Query response: "+JSON.stringify(result, null, 2));
             loadResultsTable(result);
         });
         togglePopup();
@@ -39,30 +39,30 @@ function Findflights (){
     function clearResultsTable() {
         setResultTable([]);
     }
-    function handleCheck (e) {
+    function handleCheck(e, flight) {
         // if checked then add to selectedFlights
         // if unchecked then remove from selectedFlights
         if (e.target.checked) {
-            setSelectedFlights(selectedFlights => [...selectedFlights, e.target.value]);
+            setSelectedFlights(selectedFlights => [...selectedFlights, flight]);
         } else {
-            setSelectedFlights(selectedFlights.filter(flight => flight !== e.target.value));
+            setSelectedFlights(selectedFlights => selectedFlights.filter(f => f !== flight));
         }
     }
     function handleLoad () {
         togglePopup();
         // make an alert to show the selected flights and their values
-        alert("Selected flights: "+ selectedFlights);
+        //alert("In handleLoad: "+ JSON.stringify(selectedFlights, null, 2));
         // query the database for the selected flights
-        const flightIds = selectedFlights;
+        const flightIds = selectedFlights.map(flight => flight.flightId);
         fetch("http://localhost:51261/resultsAirplaneTracer", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(flightIds)
-        }).then(res=>res.json()).then((result)=>{
-            alert("Query response: "+JSON.stringify(result, null, 2));
-            // send the selected flights to the map for display
-            loadFlightData(result);
-            passToMap(flightData);
+        }).then(res=>res.json())
+            .then((result)=>{
+                //alert("Query response: "+JSON.stringify(result, null, 2));
+                // make flight objects from the query results
+                makeFlightObjects(selectedFlights, result);
         });
     }
     function loadResultsTable (result) {
@@ -82,41 +82,55 @@ function Findflights (){
         }
     }
     //-----------------------------------------------------------------------------------------------------------------
-    // Map functions & variables |
-    //----------------------------
-    const [flightData, setFlightData] = useState([]);
-    function loadFlightData (result) {
-        // load the 'flightData' with the key value pairs of the 'result' object from the Query response
-        for (let i = 0; i < result.length; i++) {
-            setFlightData(flightData => [...flightData, {
-                //TODO: Change these to include waypoints etc...
-                /*flightId: result[i].flightId,
-                callsign: result[i].callsign,
-                aircraft: result[i].aircraft,
-                icao24: result[i].icao24,
-                departureAirport: result[i].departureAirport,
-                arrivalAirport: result[i].arrivalAirport,
-                departureDateTime: result[i].departureDateTime,
-                arrivalDateTime: result[i].arrivalDateTime,
-                flight_duration: result[i].flight_duration*/
-            }]);
+    // Make Flight Objects |
+    //----------------------
+    const [flights, setFlights] = useState([]);
+    function Flight (flightId, callsign, aircraft, icao24, departureAirport, arrivalAirport, departureDateTime, arrivalDateTime, flight_duration, waypoints) {
+        this.flightId = flightId;
+        this.callsign = callsign;
+        this.aircraft = aircraft;
+        this.icao24 = icao24;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureDateTime = departureDateTime;
+        this.arrivalDateTime = arrivalDateTime;
+        this.flight_duration = flight_duration;
+        this.waypoints = waypoints;
+    }
+    function makeFlightObjects (selectedFlights, waypointQueryResults) {
+        let flights = [];
+        for (let i = 0; i < selectedFlights.length; i++) {
+            flights.push(
+                new Flight(
+                    selectedFlights[i].flightId,
+                    selectedFlights[i].callsign,
+                    selectedFlights[i].aircraft,
+                    selectedFlights[i].icao24,
+                    selectedFlights[i].departureAirport,
+                    selectedFlights[i].arrivalAirport,
+                    selectedFlights[i].departureDateTime,
+                    selectedFlights[i].arrivalDateTime,
+                    selectedFlights[i].flight_duration,
+                    waypointQueryResults[i]
+                )
+            );
         }
+        return setFlights(flights);
     }
-    function passToMap (result) {
-        //TODO: Pass the flightData to the map -- create required MapContainer functions&variables
-    }
+    //-----------------------------------------------------------------------------------------------------------------
 
     //-----------------------------------------------------------------------------------------------------------------
     return(
-        <body>
+        <main>
             <center id="search--title">Search Menu</center>
             <SearchMenu placeholder={"Enter an Airfield..."} data = {airportData} onFormSubmit={handleFormSubmit} />
-            <MapContainer />
+            <MapContainer flights = {flights} />
             { showPopup && <ResultsPopup
                 handleClose={togglePopup}
                 handleLoad={handleLoad}
                 content={
                     <table id = "resultTable">
+                        <thead>
                         <tr>
                             <th>Selected</th>
                             <th>Call Sign</th>
@@ -128,9 +142,11 @@ function Findflights (){
                             <th>Arrival DateTime</th>
                             <th>Flight Duration</th>
                         </tr>
+                        </thead>
+                        <tbody>
                         {resultTable.map((flight, index) => (
-                            <tr >
-                                <td><input type="checkbox" name="selected" value={flight.flightId} onChange={handleCheck}/></td>
+                            <tr key={index}>
+                                <td><input type="checkbox" name="selected" value={flight} onChange={e => handleCheck(e, flight)}/></td>
                                 <td>{flight.callsign}</td>
                                 <td>{flight.aircraft}</td>
                                 <td>{flight.icao24}</td>
@@ -141,10 +157,11 @@ function Findflights (){
                                 <td>{flight.flight_duration}</td>
                             </tr>
                         ))}
+                        </tbody>
                     </table>
                 }
             />}
-        </body>
+        </main>
     );
 }
 export default Findflights;

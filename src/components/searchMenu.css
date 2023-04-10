@@ -22,5 +22,9 @@
     margin-right: 10px;
     justify-content: center;
 }
-
-
+.dataItem:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+.dataItem:hover {
+    background-color: #ddd;
+}
