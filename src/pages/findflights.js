@@ -23,8 +23,9 @@ function Findflights (){
         }).then(res=>res.json()).then((result)=>{
             //alert("Query response: "+JSON.stringify(result, null, 2));
             loadResultsTable(result);
+            if(result.length > 0) {togglePopup();}
+            else {alert("Oops!  No flights found...");}
         });
-        togglePopup();
     }
     //-----------------------------------------------------------------------------------------------------------------
     // Results popup functions & variables |
