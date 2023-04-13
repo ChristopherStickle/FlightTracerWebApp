@@ -64,7 +64,7 @@ function MapContainer(props) {
                     style: new Style({
                         stroke: new Stroke({
                             color: 'red',
-                            width: 5,
+                            width: 3,
                         }),
                     }),
                 });
@@ -79,48 +79,3 @@ function MapContainer(props) {
     );
 }
 export default MapContainer;
-
-/*
-function MapContainer(props) {
-    const [map, setMap] = useState(null);
-    const [flights, setFlights] = useState([]);
-    const mapRef = useRef();
-    //mapRef.current = map
-
-    // the map is created when the component is mounted
-    useEffect(() => {
-        const mapObj = new Map({
-            target: mapRef.current,
-            layers: [
-                new TileLayer({
-                    source: new OSM()
-                }),
-            ],
-            view: new View({
-                center: fromLonLat([-76.510498,43.455345]),
-                zoom: 14
-            }),
-        });
-        setMap(mapObj);
-    }, []);
-
-    // the flights are updated when the props are updated
-    useEffect(() => {
-        setFlights(props.flights);
-    }, [props.flights]);
-
-    // the map is updated when the flights are updated
-    useEffect(() => {
-        if (flights.length > 0) {
-            const lon = flights[0].waypoints[0].longitude;
-            const lat = flights[0].waypoints[0].latitude;
-            const center = fromLonLat([lon, lat]);
-            map.getView().setCenter(center);
-        }
-    }, [flights, map]);
-
-    return (
-        <div ref={mapRef} style={{ width: '100%', height: '100vh' }} />
-    );
-}
-*/

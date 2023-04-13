@@ -71,13 +71,12 @@ function Findflights (){
             setResultTable(resultTable => [...resultTable, {
                 flightId: result[i].flightId,
                 callsign: result[i].callsign,
-                aircraft: result[i].aircraft,
                 icao24: result[i].icao24,
                 departureAirport: result[i].departureAirport,
                 arrivalAirport: result[i].arrivalAirport,
                 departureDateTime: result[i].departureDateTime,
                 arrivalDateTime: result[i].arrivalDateTime,
-                flight_duration: result[i].flight_duration
+                flightDuration: result[i].flightDuration
             }]);
         }
     }
@@ -85,16 +84,15 @@ function Findflights (){
     // Make Flight Objects |
     //----------------------
     const [flights, setFlights] = useState([]);
-    function Flight (flightId, callsign, aircraft, icao24, departureAirport, arrivalAirport, departureDateTime, arrivalDateTime, flight_duration, waypoints) {
+    function Flight (flightId, callsign, icao24, departureAirport, arrivalAirport, departureDateTime, arrivalDateTime, flightDuration, waypoints) {
         this.flightId = flightId;
         this.callsign = callsign;
-        this.aircraft = aircraft;
         this.icao24 = icao24;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
-        this.flight_duration = flight_duration;
+        this.flightDuration = flightDuration;
         this.waypoints = waypoints;
     }
     function makeFlightObjects (selectedFlights, waypointQueryResults) {
@@ -104,17 +102,17 @@ function Findflights (){
                 new Flight(
                     selectedFlights[i].flightId,
                     selectedFlights[i].callsign,
-                    selectedFlights[i].aircraft,
                     selectedFlights[i].icao24,
                     selectedFlights[i].departureAirport,
                     selectedFlights[i].arrivalAirport,
                     selectedFlights[i].departureDateTime,
                     selectedFlights[i].arrivalDateTime,
-                    selectedFlights[i].flight_duration,
+                    selectedFlights[i].flightDuration,
                     waypointQueryResults[i]
                 )
             );
         }
+        //console.log(flights);
         return setFlights(flights);
     }
     //-----------------------------------------------------------------------------------------------------------------
@@ -134,7 +132,6 @@ function Findflights (){
                         <tr>
                             <th>Selected</th>
                             <th>Call Sign</th>
-                            <th>Aircraft</th>
                             <th>ICAO24</th>
                             <th>Departure</th>
                             <th>Arrival</th>
@@ -148,13 +145,12 @@ function Findflights (){
                             <tr key={index}>
                                 <td><input type="checkbox" name="selected" value={flight} onChange={e => handleCheck(e, flight)}/></td>
                                 <td>{flight.callsign}</td>
-                                <td>{flight.aircraft}</td>
                                 <td>{flight.icao24}</td>
                                 <td>{flight.departureAirport}</td>
                                 <td>{flight.arrivalAirport}</td>
                                 <td>{flight.departureDateTime}</td>
                                 <td>{flight.arrivalDateTime}</td>
-                                <td>{flight.flight_duration}</td>
+                                <td>{flight.flightDuration}</td>
                             </tr>
                         ))}
                         </tbody>
