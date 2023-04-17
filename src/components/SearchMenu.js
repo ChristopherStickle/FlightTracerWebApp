@@ -26,7 +26,7 @@ function SearchMenu({placeholder, data, onFormSubmit }) {
                 value.ident.toLowerCase().includes(searchWord.toLowerCase());
         });
         if (searchWord === "") {
-            setFilteredTopAirports([]);
+            setFilteredTopAirports(null);
         } else {
             setFilteredTopAirports(newFilter);
         }
@@ -38,7 +38,7 @@ function SearchMenu({placeholder, data, onFormSubmit }) {
                 value.ident.toLowerCase().includes(searchWord.toLowerCase());
         });
         if (searchWord === "") {
-            setFilteredBottomAirports([]);
+            setFilteredBottomAirports(null);
         } else {
             setFilteredBottomAirports(newFilter);
         }
@@ -85,6 +85,8 @@ function SearchMenu({placeholder, data, onFormSubmit }) {
             fbottomDeparture: "",
             fbottomArrival: ""
         });
+        setFilteredTopAirports(null);
+        setFilteredBottomAirports(null);
     };
 
     const handleSubmit = (event) => {

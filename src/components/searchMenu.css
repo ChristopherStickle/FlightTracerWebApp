@@ -28,17 +28,17 @@
 .dataItem:hover {
     background-color: #ddd;
 }
-
-/*
 .dataResultTop {
-    position: fixed;
+    position: absolute;
     background-color: white;
     border: 1px solid black;
     top: 136px;
+    z-index: 2;
 }
 .dataResultBottom {
-    position: fixed;
+    position: absolute;
     background-color: white;
     border: 1px solid black;
     top: 167px;
-}*/
+    z-index: 2;
+}
