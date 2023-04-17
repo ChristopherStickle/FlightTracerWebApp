@@ -8,8 +8,9 @@
 }
 .box{
     position: relative;
-    width: 50%;
+    width: 75%;
     min-height: 50%;
+    height: 600px;
     background-color: #fff;
     border: 1px solid #999;
     border-radius: 10px;
@@ -21,14 +22,15 @@
     cursor: pointer;
     border: 1px solid #999;
     border-radius: 50%;
-    position: fixed;
-    right: calc(25% - 8px);
-    top: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .btn-load{
     cursor: pointer;
     border: 1px solid #999;
-    position: fixed;
-    right: calc(25% + 5px);
-    bottom: calc(50% - 15px);
+    position: absolute;
+    height: 40px;
+    width: 125px;
+    bottom: 10px;
 }

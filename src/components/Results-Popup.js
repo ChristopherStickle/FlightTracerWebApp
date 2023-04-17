@@ -15,7 +15,7 @@ const ResultsPopup = props => {
         <div className="ResultsPopup">
             <div className="box">
                 <button className="btn-close" onClick={props.handleClose}>X</button>
-                <button className="btn-load">Load</button>
+                <button className="btn-load" onClick={props.handleLoad}>Load</button>
                 {props.content}
             </div>
         </div>
