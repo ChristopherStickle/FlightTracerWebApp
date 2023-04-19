@@ -113,8 +113,8 @@ function MapContainer(props) {
     
     return (
         <body className={"map-page-body"}>
-            <div className={"mapContainer"} ref={mapRef} />
-            { (flights.length > 0) && (
+        <div className={"mapContainer"} ref={mapRef} />
+        { (flights.length > 0) && (
                 <div className={"FlightLegendPanel"}>
                 {<table className= "PathTable">
                     <thead>
