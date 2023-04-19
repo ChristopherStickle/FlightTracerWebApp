@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
+import {fromLonLat} from 'ol/proj';
 import 'ol/ol.css';
 import {Stroke, Style} from "ol/style";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import {LineString} from "ol/geom";
 import {Feature} from "ol";
+import "./mapContainer.css";
 
 function MapContainer(props) {
     const [map, setMap] = useState(null);
@@ -73,9 +74,80 @@ function MapContainer(props) {
             }
         }
     }, [flights, map]);
+    //-----------------------------------------------------------------------------------------------------------------
+    // Legend Panel - Flights Table, buttons |
+    //----------------------------------------
+    const [selectedFlights, setSelectedFlights] = useState([]);
+
+    const handleCheck = (e, flight) => {
+        if (e.target.checked) {
+            setSelectedFlights([...selectedFlights, flight]);
+        } else {
+            setSelectedFlights(selectedFlights.filter(f => f !== flight));
+        }
+    }
+
+    const handleIndexClick = (flight) => {
+        //zoom map to selected flight
+        const start = flight.waypoints[0];
+        const coordinates = [start.longitude, start.latitude];
+        map.getView().setZoom(12);
+        map.getView().setRotation(0);
+        map.getView().setCenter(fromLonLat(coordinates));
+    }
+    const handleClear = () => {
+        window.location.reload();
+    }
+    const handleDownload = () => {
+        const flightIds = selectedFlights.map(flight => flight.flightId);
+        alert("Flight IDs: "+flightIds);
+        /*fetch("http://localhost:51261/resultsAirplaneTracer", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(flightIds)
+        }).then(res=>res.json())
+            .then((result)=>{
+            //send the files to user
+            });*/
+    }
     
     return (
-        <div ref={mapRef} style={{ width: '100%', height: '100vh' }} />
+        <body className={"map-page-body"}>
+            <div className={"mapContainer"} ref={mapRef} />
+            { (flights.length > 0) && (
+                <div className={"FlightLegendPanel"}>
+                {<table className= "PathTable">
+                    <thead>
+                    <tr>
+                        <th>Selected</th>
+                        <th>Call Sign</th>
+                        <th>ICAO24</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Departure DateTime</th>
+                        <th>Arrival DateTime</th>
+                        <th>Flight Duration</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {flights.map((flight, index) => (
+                        <tr key={index} onClick={event => handleIndexClick(flight)}>
+                            <td><input type="checkbox" name="selected" value={flight} onChange={e => handleCheck(e, flight)}/></td>
+                            <td>{flight.callsign}</td>
+                            <td>{flight.icao24}</td>
+                            <td>{flight.departureAirport}</td>
+                            <td>{flight.arrivalAirport}</td>
+                            <td>{flight.departureDateTime}</td>
+                            <td>{flight.arrivalDateTime}</td>
+                            <td>{flight.flightDuration}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>}
+                <button className="btn-clear-FP" onClick={handleClear}>Clear Map</button>
+                <button className="btn-Dwnld-FP" onClick={handleDownload}>Download</button>
+            </div>)}
+        </body>
     );
 }
 export default MapContainer;
