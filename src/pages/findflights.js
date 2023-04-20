@@ -85,6 +85,8 @@ function Findflights (){
     // Make Flight Objects |
     //----------------------
     const [flights, setFlights] = useState([]);
+    const colorList =
+        [  "blue", "red", "green", "orange", "purple", "brown", "black", "grey", "magenta"];
     function Flight (flightId, callsign, icao24, departureAirport, arrivalAirport, departureDateTime, arrivalDateTime, flightDuration, waypoints) {
         this.flightId = flightId;
         this.callsign = callsign;
@@ -95,6 +97,7 @@ function Findflights (){
         this.arrivalDateTime = arrivalDateTime;
         this.flightDuration = flightDuration;
         this.waypoints = waypoints;
+        this.color = colorList[Math.floor(Math.random() * colorList.length)];
     }
     function makeFlightObjects (selectedFlights, waypointQueryResults) {
         let flights = [];
@@ -109,7 +112,8 @@ function Findflights (){
                     selectedFlights[i].departureDateTime,
                     selectedFlights[i].arrivalDateTime,
                     selectedFlights[i].flightDuration,
-                    waypointQueryResults[i]
+                    waypointQueryResults[i],
+                    selectedFlights[i].color
                 )
             );
         }

@@ -64,7 +64,7 @@ function MapContainer(props) {
                     source: vectorSource,
                     style: new Style({
                         stroke: new Stroke({
-                            color: 'red',
+                            color: flights[i].color,
                             width: 3,
                         }),
                     }),
@@ -112,7 +112,7 @@ function MapContainer(props) {
     }
     
     return (
-        <body className={"map-page-body"}>
+        <div className={"map-page-body"}>
         <div className={"mapContainer"} ref={mapRef} />
         { (flights.length > 0) && (
                 <div className={"FlightLegendPanel"}>
@@ -132,7 +132,44 @@ function MapContainer(props) {
                     <tbody>
                     {flights.map((flight, index) => (
                         <tr key={index} onClick={event => handleIndexClick(flight)}>
-                            <td><input type="checkbox" name="selected" value={flight} onChange={e => handleCheck(e, flight)}/></td>
+                            <td>
+                                <input type="checkbox"
+                                       name="selected"
+                                       value={flight}
+                                       //onChange={e => handleCheck(e, flight)}
+                                       style={{visibility: "hidden"}}
+                                />
+                            <span className={"colored-checkbox"}
+                                  style={{
+                                      top: "50%",
+                                      left: "10%",
+                                      width: "50px",
+                                      height: "50px",
+                                      background: flight.color,
+                                      display: "inline-block",
+                                      position: "relative",
+                                      cursor: "pointer",
+                                  }}
+                                  onClick={() => { // toggle the checkbox
+                                      const checkbox = document.getElementsByName("selected")[index];
+                                      checkbox.checked = !checkbox.checked;
+                                      handleCheck({ target: checkbox }, flight);
+                                  }}
+                            >
+                            <span
+                                style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    width: "15px",
+                                    height: "15px",
+                                    background: "white",
+                                    visibility: selectedFlights.includes(flight) ? "visible" : "hidden"
+                                }}
+                            ></span>
+                            </span>
+                            </td>
                             <td>{flight.callsign}</td>
                             <td>{flight.icao24}</td>
                             <td>{flight.departureAirport}</td>
@@ -147,7 +184,7 @@ function MapContainer(props) {
                 <button className="btn-clear-FP" onClick={handleClear}>Clear Map</button>
                 <button className="btn-Dwnld-FP" onClick={handleDownload}>Download</button>
             </div>)}
-        </body>
+        </div>
     );
 }
 export default MapContainer;
