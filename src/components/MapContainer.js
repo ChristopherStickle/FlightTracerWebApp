@@ -96,19 +96,26 @@ function MapContainer(props) {
         map.getView().setCenter(fromLonLat(coordinates));
     }
     const handleClear = () => {
+        setSelectedFlights([]);
         window.location.reload();
     }
     const handleDownload = () => {
         const flightIds = selectedFlights.map(flight => flight.flightId);
         alert("Flight IDs: "+flightIds);
-        /*fetch("http://localhost:51261/resultsAirplaneTracer", {
+        fetch("http://localhost:51261/resultsAirplaneTracer", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(flightIds)
-        }).then(res=>res.json())
-            .then((result)=>{
-            //send the files to user
-            });*/
+        }).then(res=>res.blob())
+            .then(blob=>{
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'resultsAirplaneTracer.fml');
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+            })
     }
     
     return (

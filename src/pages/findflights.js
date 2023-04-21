@@ -64,7 +64,10 @@ function Findflights (){
                 //alert("Query response: "+JSON.stringify(result, null, 2));
                 // make flight objects from the query results
                 makeFlightObjects(selectedFlights, result);
-        });
+            })
+            .catch((error)=>{
+                alert("Error: "+error);
+            });
     }
     function loadResultsTable (result) {
         // load the 'resultTable' with the key value pairs of the 'result' object from the Query response
@@ -86,7 +89,18 @@ function Findflights (){
     //----------------------
     const [flights, setFlights] = useState([]);
     const colorList =
-        [  "blue", "red", "green", "orange", "purple", "brown", "black", "grey", "magenta"];
+        [
+            "Gray",
+            "Red",
+            "Black",
+            "Maroon",
+            "Olive",
+            "Green",
+            "teal",
+            "Blue",
+            "Navy",
+            "Purple",
+        ];
     function Flight (flightId, callsign, icao24, departureAirport, arrivalAirport, departureDateTime, arrivalDateTime, flightDuration, waypoints) {
         this.flightId = flightId;
         this.callsign = callsign;
