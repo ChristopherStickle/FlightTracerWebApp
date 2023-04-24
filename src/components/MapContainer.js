@@ -101,8 +101,8 @@ function MapContainer(props) {
     }
     const handleDownload = () => {
         const flightIds = selectedFlights.map(flight => flight.flightId);
-        alert("Flight IDs: "+flightIds);
-        fetch("http://localhost:51261/resultsAirplaneTracer", {
+        //alert("Flight IDs: "+flightIds);
+        fetch("http://localhost:51261/zip", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(flightIds)
@@ -111,7 +111,7 @@ function MapContainer(props) {
                 const url = window.URL.createObjectURL(new Blob([blob]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', 'resultsAirplaneTracer.fml');
+                link.setAttribute('download', 'flights.zip');
                 document.body.appendChild(link);
                 link.click();
                 link.parentNode.removeChild(link);
