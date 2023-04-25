@@ -55,6 +55,7 @@ function Findflights (){
         //alert("In handleLoad: "+ JSON.stringify(selectedFlights, null, 2));
         // query the database for the selected flights
         const flightIds = selectedFlights.map(flight => flight.flightId);
+        if (flightIds.length === 0) { return; }
         fetch("http://localhost:51261/resultsAirplaneTracer", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
@@ -64,7 +65,10 @@ function Findflights (){
                 //alert("Query response: "+JSON.stringify(result, null, 2));
                 // make flight objects from the query results
                 makeFlightObjects(selectedFlights, result);
-        });
+            })
+            .catch((error)=>{
+                alert("Error: "+error);
+            });
     }
     function loadResultsTable (result) {
         // load the 'resultTable' with the key value pairs of the 'result' object from the Query response
@@ -85,6 +89,19 @@ function Findflights (){
     // Make Flight Objects |
     //----------------------
     const [flights, setFlights] = useState([]);
+    const colorList =
+        [
+            "Gray",
+            "Red",
+            "Black",
+            "Maroon",
+            "Olive",
+            "Green",
+            "teal",
+            "Blue",
+            "Navy",
+            "Purple",
+        ];
     function Flight (flightId, callsign, icao24, departureAirport, arrivalAirport, departureDateTime, arrivalDateTime, flightDuration, waypoints) {
         this.flightId = flightId;
         this.callsign = callsign;
@@ -95,6 +112,7 @@ function Findflights (){
         this.arrivalDateTime = arrivalDateTime;
         this.flightDuration = flightDuration;
         this.waypoints = waypoints;
+        this.color = colorList[Math.floor(Math.random() * colorList.length)];
     }
     function makeFlightObjects (selectedFlights, waypointQueryResults) {
         let flights = [];
@@ -109,7 +127,8 @@ function Findflights (){
                     selectedFlights[i].departureDateTime,
                     selectedFlights[i].arrivalDateTime,
                     selectedFlights[i].flightDuration,
-                    waypointQueryResults[i]
+                    waypointQueryResults[i],
+                    selectedFlights[i].color
                 )
             );
         }

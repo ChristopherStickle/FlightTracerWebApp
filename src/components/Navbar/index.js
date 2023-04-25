@@ -4,11 +4,11 @@ export default function Navbar() {
     return (
         <nav className="nav">
             <Link to="/" className="site-title">
-                AirTracer
+                AirplaneTracer
             </Link>
             <ul>
                 <CustomLink to="/findflights">Find Flights</CustomLink>
-                <CustomLink to="/about">About</CustomLink>
+                {/*<CustomLink to="/about">About</CustomLink>*/}
             </ul>
         </nav>
     )
