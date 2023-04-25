@@ -55,6 +55,7 @@ function Findflights (){
         //alert("In handleLoad: "+ JSON.stringify(selectedFlights, null, 2));
         // query the database for the selected flights
         const flightIds = selectedFlights.map(flight => flight.flightId);
+        if (flightIds.length === 0) { return; }
         fetch("http://localhost:51261/resultsAirplaneTracer", {
             method:"POST",
             headers:{"Content-Type":"application/json"},

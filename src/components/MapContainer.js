@@ -16,7 +16,8 @@ function MapContainer(props) {
     const [map, setMap] = useState(null);
     const [flights, setFlights] = useState([]);
     const mapRef = useRef();
-    // the map is created when the component is mounted
+
+    // This map is created when the component is mounted
     useEffect(() => {
         const mapObj = new Map({
             target: mapRef.current,
@@ -33,12 +34,19 @@ function MapContainer(props) {
         setMap(mapObj);
     }, []);
 
-    // the flights are updated when the props are updated
+    // When the flights are updated, update the props and clear the map, and clear the previously selected flights
     useEffect(() => {
+        setSelectedFlights([]);
         setFlights(props.flights);
-    }, [props.flights]);
+        if (map !== null) {
+            map.getLayers().clear();
+            map.getLayers().push(new TileLayer({
+                source: new OSM()
+            }));
+        }
+    }, [map, props.flights]);
 
-    // the map is updated when the flights are updated
+    // Update the map when the flights are updated
     useEffect(() => {
         if (flights.length > 0) {
             /* for each flight in the flights array
@@ -101,6 +109,11 @@ function MapContainer(props) {
     }
     const handleDownload = () => {
         const flightIds = selectedFlights.map(flight => flight.flightId);
+        //if flightIds is empty, do nothing
+        if (flightIds.length === 0) {
+            alert("No flights selected to download.");
+            return;
+        }
         //alert("Flight IDs: "+flightIds);
         fetch("http://localhost:51261/zip", {
             method:"POST",
