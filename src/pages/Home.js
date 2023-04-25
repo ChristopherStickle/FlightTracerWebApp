@@ -77,6 +77,7 @@ function Home(){
                 <li> <a href={"https://ourairports.com/"}>OurAirports</a> for their extensive and up to date repository of the world’s airfields.</li>
                 <li> <a href={"https://www.opensky-network.org"}>OpenSky Network</a>, for access and use of their ADS-B data.</li>
                 <li> <a href={"https://openlayers.org/"}>OpenLayers</a> library, used for the map and its relevant renderings. Code licensed under the <a href={"https://www.tldrlegal.com/license/bsd-2-clause-license-(freebsd)"}>2-Clause BSD.</a></li>
+                <li> The <a href={"https://scipy.org/"}>SciPy</a> and <a href={"https://numpy.org/"}>NumPy</a> libraries which we used in our interpolation methods.</li>
             </p>
         </main>
     );
